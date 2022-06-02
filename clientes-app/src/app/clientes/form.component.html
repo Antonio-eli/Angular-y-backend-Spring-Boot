@@ -1,0 +1,46 @@
+<!-- '
+    Todo: La directiva ngModel
+    Básicamente se trata de un enlace unidireccional
+    entre una propiedad de nuestra clase con el valor que se muestra un control de formulario HTML de tipo input, textarea etc.
+    Nos permite mapear el formulario a un objeto del modelo
+    ' -->
+<form class="row g-3" #clienteForm="ngForm">
+    <div class="col-md-6">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" [(ngModel)]="cliente.nombre" id="" name="nombre" placeholder="Ingresa el nombre:" #nombre="ngModel">
+        <!--minlength="4"-->
+
+        <div class="alert alert-danger mt-3" role="alert" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">El campo nombre es requerido</div>
+            <div *ngIf="nombre.errors.minlength">El campo nombre debe tener al menos 4 caracteres</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="apellido" class="form-label">Apellido</label>
+        <input type="text" class="form-control" [(ngModel)]="cliente.apellido" id="" name="apellido" placeholder="Ingresa el apellido:" #apellido="ngModel">
+        <!--required-->
+        <div class="alert alert-danger mt-3" role="alert" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+            <div *ngIf="apellido.errors.required">El campo apellido es requerido</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" [(ngModel)]="cliente.email" id="" name="email" placeholder="Ingresa el email:" #email="ngModel">
+        <!--required email-->
+        <div class="alert alert-danger mt-3" role="alert" *ngIf="email.invalid && (email.dirty || email.touched)">
+            <div *ngIf="email.errors.required">El campo email es requerido</div>
+            <div *ngIf="email.errors.email">El campo email debe tener un formato válido</div>
+        </div>
+    </div>
+    <div class="col-md-6 d-flex flex-row-reverse align-items-end">
+        <button type="submit" class="btn btn-outline-primary" (click)='create()' *ngIf="!cliente.id else elseBlock">Crear</button>
+        <!--[disabled]="!clienteForm.form.valid"-->
+        <ng-template #elseBlock>
+            <button type="submit" class="btn btn-outline-secondary" (click)='update()' [disabled]="!clienteForm.form.valid">Editar cliente</button>
+        </ng-template>
+    </div>
+</form>
+
+<ul class="list-group mt-3" *ngIf="errores?.length > 0">
+    <li class="list-group-item list-group-item-danger text-center" *ngFor="let error of errores">{{ error }}</li>
+</ul>

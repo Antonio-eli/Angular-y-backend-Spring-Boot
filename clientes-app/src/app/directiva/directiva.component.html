@@ -1,0 +1,5 @@
+<p class="card-header mb-2">Listado de cursos <span class="badge bg-secondary"> Directiva *ngFor</span></p>
+<button type="button" (click)="setHabilitar()" class="btn btn-primary">{{habilitar == true ? 'Ocultar' : 'Mostrar'}}</button>
+<ul class="list-group list-group-flush" *ngIf="habilitar">
+    <li class="list-group-item" *ngFor="let curso of listaCurso">{{ curso }}</li>
+</ul>
